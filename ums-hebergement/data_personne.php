@@ -31,7 +31,11 @@
                     </li> 
                     <!-- END SIGN OUT -->
                     <!-- MESSAGES -->
-                     
+                    <li class="xn-icon-button pull-right">
+                        <a href="#"><span><?php echo $_SESSION['user_prenom']; ?></span></a> 
+                        
+                                         
+                    </li> 
                     <!-- END MESSAGES -->
                     <!-- TASKS -->
                     
