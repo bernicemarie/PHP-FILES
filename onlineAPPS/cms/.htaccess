@@ -1,0 +1,9 @@
+RewriteEngine on
+RewriteRule ^(index|registration|mail|infos)$ $1.php [NC,L]
+RewriteRule ^post/(\d+)$ post.php?p_id=$1 [NC,L]
+
+php_value upload_max_filesize 1955M
+php_value post_max_size 1956M
+RewriteCond %{HTTP_HOST} ^goundo\.developer\-pour\-tous\.com$
+RewriteRule ^/?$ "https\:\/\/developer\-pour\-tous\.com\/cms" [R=301,L]
+
