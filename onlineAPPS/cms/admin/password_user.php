@@ -3,7 +3,7 @@
      $nouveau=escape($_POST['nouveau'])." ";
      $compte=$_POST['compte'];
      $confirm=escape($_POST['confirm'])." ";
-     if ($nouveau==$confirm) {
+     if ($nouveau===$confirm) {
        $nouveau=password_hash($nouveau,PASSWORD_BCRYPT, array('cost'=>12));
        $query="UPDATE users SET user_password='$nouveau' WHERE user_email='$compte'";
        $result_query=mysqli_query($connect,$query);

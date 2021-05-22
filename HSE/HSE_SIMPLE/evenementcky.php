@@ -75,7 +75,8 @@
 
                             <!-- START VALIDATIONENGINE PLUGIN -->
                             <div class="block">                                                 
-                                 <form class="form-validate form-horizontal"  method="post" action="enregistrereventscky.php" enctype="multipart/form-data" >
+                                 <form class="form-validate form-horizontal"  method="post" action="" enctype="multipart/form-data" >
+
                                   <div class="panel panel-info">
                                             <div class="panel-heading ui-draggable-handle">
                                                 <h3 class="panel-title"><strong>Ajouter un évènement</strong></h3>
@@ -331,6 +332,7 @@ while ($ent=$req->fetch()) {
                       </div>
                     </div>
                     </div>
+
 <div class="row">
                         <div class="col-md-12">
 

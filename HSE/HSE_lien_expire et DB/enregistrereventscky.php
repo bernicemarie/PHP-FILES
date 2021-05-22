@@ -37,7 +37,6 @@ if(isset($_FILES['photo'])){
 move_uploaded_file($_FILES['photo']['tmp_name'], $im);
 
 }
-    header('location:datacky.php?msg=Insertion bien effectuée');
 }
 else{
 	echo "Aucune insertion effectuée, contactez votre Administrateur Principal";
