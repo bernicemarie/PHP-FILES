@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  Dim 20 juin 2021 à 22:55
+-- Généré le :  mer. 23 juin 2021 à 17:40
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.11
 
@@ -25,6 +25,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `account_student_fees`
+--
+
+CREATE TABLE `account_student_fees` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `year_id` int(11) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `fee_category_id` int(11) DEFAULT NULL,
+  `date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `assigns`
 --
 
@@ -38,6 +56,15 @@ CREATE TABLE `assigns` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `assigns`
+--
+
+INSERT INTO `assigns` (`id`, `class_id`, `subject_id`, `full_mark`, `pass_mark`, `subjective_mark`, `created_at`, `updated_at`) VALUES
+(6, 3, 4, 12, 15, 16, '2021-06-22 19:26:12', '2021-06-22 19:26:12'),
+(7, 4, 4, 12, 15, 16, '2021-06-22 19:28:17', '2021-06-22 19:28:17'),
+(8, 4, 3, 12, 15, 16, '2021-06-22 19:53:22', '2021-06-22 19:53:22');
 
 -- --------------------------------------------------------
 
@@ -94,7 +121,53 @@ INSERT INTO `discount_students` (`id`, `assign_student_id`, `fee_category_id`, `
 (13, 13, 1, 122, '2021-06-19 12:36:29', '2021-06-19 12:36:29'),
 (14, 14, 1, 122, '2021-06-19 12:37:24', '2021-06-19 12:37:24'),
 (15, 15, 1, 122, '2021-06-20 09:15:27', '2021-06-20 09:15:27'),
-(16, 16, 1, 122, '2021-06-20 09:35:03', '2021-06-20 09:35:03');
+(16, 16, 1, 122, '2021-06-20 09:35:03', '2021-06-20 09:35:03'),
+(17, 17, 1, 122, '2021-06-22 18:05:30', '2021-06-22 18:05:30');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `employee_attendances`
+--
+
+CREATE TABLE `employee_attendances` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `employee_id` int(11) NOT NULL COMMENT 'employee_id=User_id',
+  `date` date NOT NULL,
+  `attend_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `employee_attendances`
+--
+
+INSERT INTO `employee_attendances` (`id`, `employee_id`, `date`, `attend_status`, `created_at`, `updated_at`) VALUES
+(1, 25, '2021-06-21', 'Present', '2021-06-21 19:26:36', '2021-06-21 19:26:36');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `employee_leaves`
+--
+
+CREATE TABLE `employee_leaves` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `employee_id` int(11) NOT NULL COMMENT 'employee_id=User_id',
+  `leave_purpose_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `employee_leaves`
+--
+
+INSERT INTO `employee_leaves` (`id`, `employee_id`, `leave_purpose_id`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
+(1, 25, 2, '2021-06-21', '2021-06-21', '2021-06-21 17:08:31', '2021-06-21 17:08:31');
 
 -- --------------------------------------------------------
 
@@ -120,7 +193,8 @@ CREATE TABLE `employee_salary_logs` (
 INSERT INTO `employee_salary_logs` (`id`, `employee_id`, `previous_salary`, `present_salary`, `increment_salary`, `effected_salary`, `created_at`, `updated_at`) VALUES
 (1, 25, 40000000, 40000000, 0, '2021-06-20', '2021-06-20 12:47:29', '2021-06-20 12:47:29'),
 (5, 25, 140000000, 190000000, 50000000, '2021-06-21', '2021-06-20 15:43:30', '2021-06-20 15:43:30'),
-(6, 27, 40000000, 40000000, 0, '2021-06-20', '2021-06-20 15:45:46', '2021-06-20 15:45:46');
+(6, 27, 40000000, 40000000, 0, '2021-06-20', '2021-06-20 15:45:46', '2021-06-20 15:45:46'),
+(7, 25, 191500000, 191600000, 100000, '2021-06-21', '2021-06-21 11:01:14', '2021-06-21 11:01:14');
 
 -- --------------------------------------------------------
 
@@ -207,6 +281,46 @@ INSERT INTO `fee_categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `leave_purposes`
+--
+
+CREATE TABLE `leave_purposes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `leave_purposes`
+--
+
+INSERT INTO `leave_purposes` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Famillly', NULL, NULL),
+(2, 'Personnel', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `marks_grades`
+--
+
+CREATE TABLE `marks_grades` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `grade_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `grade_point` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_marks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `end_marks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_point` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `end_point` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `migrations`
 --
 
@@ -239,7 +353,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2014_10_12_000000_create_users_table', 13),
 (19, '2021_06_10_150157_create_student_registrations_table', 14),
 (20, '2021_06_10_150546_create_discount_students_table', 14),
-(21, '2021_06_20_114902_create_employee_salary_logs_table', 15);
+(21, '2021_06_20_114902_create_employee_salary_logs_table', 15),
+(22, '2021_06_21_141118_create_employee_leaves_table', 16),
+(23, '2021_06_21_143228_create_leave_purposes_table', 16),
+(24, '2021_06_21_175012_create_employee_attendances_table', 17),
+(25, '2021_06_22_172848_create_student_marks_table', 18),
+(26, '2021_06_23_085959_create_marks_grades_table', 19),
+(27, '2021_06_23_110452_create_account_student_fees_table', 20);
 
 -- --------------------------------------------------------
 
@@ -291,8 +411,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('itlm1VX1MP3bhcaqpwBX5KdE2L52MV2Bp9LmXXcu', 18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiekk4R3JDMm1BTDVkZWs3VkZtb0tCRWd5a0xZajFOV2ZaSGNKRTNaYyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjYwOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvZW1wbG95ZWVzL3NhbGFyeS9lbXBsb3llZS9pbmNyZW1lbnQvMjciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxODtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJGtETjFhNnVkc2tuZURjQjRVUjcwTHVhOXREbFNDRjlMaUJjNERLODlUZHNPeWp1QU9Zck82IjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRrRE4xYTZ1ZHNrbmVEY0I0VVI3MEx1YTl0RGxTQ0Y5TGlCYzRESzg5VGRzT3lqdUFPWXJPNiI7fQ==', 1624204132),
-('nFWbIrbO4iENeZtosmpbnlhZIOuSnJtgIaI7Dbjz', 18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiUTR3WDFiY1g5bHZ6QmI4Tjg1WENGblgxRkxyQ0FVamdGR0ZCRlhRUiI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjYwOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvZW1wbG95ZWVzL3NhbGFyeS9lbXBsb3llZS9pbmNyZW1lbnQvMjciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxODtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJGtETjFhNnVkc2tuZURjQjRVUjcwTHVhOXREbFNDRjlMaUJjNERLODlUZHNPeWp1QU9Zck82Ijt9', 1624219150);
+('dsRbr84OPy2GXmWidv0dfGlO52wdqTrhSaN4SQwf', 18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoicHFOOUJVYldVbTZ2R3ZjcWlMSGR4SUlUNWN0YWw0d3J4NmJiN296YyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ2OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWNjb3VudHMvc3R1ZGVudC9mZWUvYWRkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTg7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRrRE4xYTZ1ZHNrbmVEY0I0VVI3MEx1YTl0RGxTQ0Y5TGlCYzRESzg5VGRzT3lqdUFPWXJPNiI7fQ==', 1624469460),
+('xsKhwJkARF7KxGJO8dWElxzqabrxJfzdkWdU51Hm', 18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiYUpFaURzMEJzVnVRbUFiRGRPdlB1SGdhN3ZBWVZmNG15cmNjem4zMyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ0OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvbWFya3MvbWFya3MvZ3JhZGUvdmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE4O3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAka0ROMWE2dWRza25lRGNCNFVSNzBMdWE5dERsU0NGOUxpQmM0REs4OVRkc095anVBT1lyTzYiO30=', 1624444091);
 
 -- --------------------------------------------------------
 
@@ -341,6 +461,32 @@ INSERT INTO `student_groupes` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `student_marks`
+--
+
+CREATE TABLE `student_marks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `student_id` int(11) NOT NULL COMMENT 'student_id=User_id',
+  `id_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `year_id` int(11) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `assign_subject_id` int(11) DEFAULT NULL,
+  `exam_type_id` int(11) DEFAULT NULL,
+  `marks` double DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `student_marks`
+--
+
+INSERT INTO `student_marks` (`id`, `student_id`, `id_no`, `year_id`, `class_id`, `assign_subject_id`, `exam_type_id`, `marks`, `created_at`, `updated_at`) VALUES
+(2, 24, '202100001', 9, 3, 6, 7, 50, '2021-06-23 07:59:56', '2021-06-23 07:59:56');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `student_registrations`
 --
 
@@ -361,11 +507,8 @@ CREATE TABLE `student_registrations` (
 --
 
 INSERT INTO `student_registrations` (`id`, `student_id`, `roll`, `class_id`, `year_id`, `groupe_id`, `shift_id`, `created_at`, `updated_at`) VALUES
-(12, 23, 1, 3, 9, 1, 3, '2021-06-18 21:23:33', '2021-06-19 12:50:30'),
-(13, 23, 1, 3, 9, 1, 3, '2021-06-19 12:36:29', '2021-06-19 17:06:42'),
 (14, 23, 1, 3, 2, 1, 3, '2021-06-19 12:37:24', '2021-06-19 12:37:24'),
-(15, 23, NULL, 3, 9, 1, 4, '2021-06-20 09:15:27', '2021-06-20 09:15:27'),
-(16, 24, NULL, 3, 9, 1, 3, '2021-06-20 09:35:03', '2021-06-20 09:35:03');
+(17, 24, NULL, 3, 9, 1, 3, '2021-06-22 18:05:30', '2021-06-22 18:05:30');
 
 -- --------------------------------------------------------
 
@@ -474,12 +617,17 @@ INSERT INTO `users` (`id`, `usertype`, `name`, `email`, `email_verified_at`, `pa
 (18, 'Admin', 'Benjamin Tamba Kamano', 'kamanobenjamin@gmail.com', NULL, '$2y$10$kDN1a6udskneDcB4UR70Lua9tDlSCF9LiBc4DK89TdsOyjuAOYrO6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Admin', NULL, NULL, NULL, 1, NULL, NULL, NULL, '2021-06-12 06:52:48', '2021-06-12 06:54:02'),
 (19, 'Admin', 'Jean Pierre KAMANO', 'jean@gmail.com', NULL, '$2y$10$99pMtMjfYlUcBb1oFmlmheb4NO.v3drbDEp9PctCyCsvA6dHPwC/i', '+224 622791979', 'Matoto', 'Homme', '20210613113820210404_134646.jpg', NULL, NULL, NULL, NULL, NULL, '5641', 'Operator', NULL, NULL, NULL, 1, NULL, NULL, NULL, '2021-06-13 11:00:29', '2021-06-13 11:38:05'),
 (24, 'Student', 'Kamano', NULL, NULL, '$2y$10$un5fci.YMGAjlCNao8GXh.K8.g7wgerWhbT0VSAoEjdlD3pgR2MX2', '+224 0622791979', 'Matoto', 'Homme', '20210620093520210601_201838.jpg', 'Benjamin', 'Tamba', NULL, '202100001', '2021-06-20', '7403', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2021-06-20 09:35:03', '2021-06-20 09:35:03'),
-(25, 'employee', 'Jean Pierre KAMANO', NULL, NULL, '$2y$10$4gN0yaY4F8BiG4GdyI9IRO5lpN5zzfqOjA2chw4Nw3cL1ovK65vju', '+224 622791979', 'Matoto', 'Homme', '20210620140720210404_134646.jpg', 'Benjamin', 'Bongono Marguerite Saran', NULL, '2021060001', '2021-06-20', '3669', NULL, '2021-06-20', 5, 190000000, 1, NULL, NULL, NULL, '2021-06-20 12:47:29', '2021-06-20 15:43:30'),
-(27, 'employee', 'Bongono', NULL, NULL, '$2y$10$fasvNgSPgYZ07birdx1VJunlFFrv6ryFBCO0CzUXKeGrnW8tBpUVW', '+224 622791979', 'Matoto', 'Femme', '20210620154520210615_144615.jpg', 'Benjamin', 'Tamba', NULL, '2021060026', '2021-06-20', '9399', NULL, '2021-06-20', 5, 40000000, 1, NULL, NULL, NULL, '2021-06-20 15:45:46', '2021-06-20 15:45:46');
+(25, 'employee', 'Jean Pierre KAMANO', NULL, NULL, '$2y$10$4gN0yaY4F8BiG4GdyI9IRO5lpN5zzfqOjA2chw4Nw3cL1ovK65vju', '+224 622791979', 'Matoto', 'Homme', '20210620140720210404_134646.jpg', 'Benjamin', 'Bongono Marguerite Saran', NULL, '2021060001', '2021-06-20', '3669', NULL, '2021-06-20', 5, 191600000, 1, NULL, NULL, NULL, '2021-06-20 12:47:29', '2021-06-21 11:01:14');
 
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `account_student_fees`
+--
+ALTER TABLE `account_student_fees`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `assigns`
@@ -498,6 +646,18 @@ ALTER TABLE `designations`
 -- Index pour la table `discount_students`
 --
 ALTER TABLE `discount_students`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `employee_attendances`
+--
+ALTER TABLE `employee_attendances`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `employee_leaves`
+--
+ALTER TABLE `employee_leaves`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -532,6 +692,19 @@ ALTER TABLE `fee_amounts`
 ALTER TABLE `fee_categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `fee_categories_name_unique` (`name`);
+
+--
+-- Index pour la table `leave_purposes`
+--
+ALTER TABLE `leave_purposes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `leave_purposes_name_unique` (`name`);
+
+--
+-- Index pour la table `marks_grades`
+--
+ALTER TABLE `marks_grades`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `migrations`
@@ -576,6 +749,12 @@ ALTER TABLE `student_groupes`
   ADD UNIQUE KEY `student_groupes_name_unique` (`name`);
 
 --
+-- Index pour la table `student_marks`
+--
+ALTER TABLE `student_marks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `student_registrations`
 --
 ALTER TABLE `student_registrations`
@@ -614,10 +793,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT pour la table `account_student_fees`
+--
+ALTER TABLE `account_student_fees`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `assigns`
 --
 ALTER TABLE `assigns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `designations`
@@ -629,13 +814,25 @@ ALTER TABLE `designations`
 -- AUTO_INCREMENT pour la table `discount_students`
 --
 ALTER TABLE `discount_students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT pour la table `employee_attendances`
+--
+ALTER TABLE `employee_attendances`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `employee_leaves`
+--
+ALTER TABLE `employee_leaves`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `employee_salary_logs`
 --
 ALTER TABLE `employee_salary_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `exams`
@@ -662,10 +859,22 @@ ALTER TABLE `fee_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT pour la table `leave_purposes`
+--
+ALTER TABLE `leave_purposes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `marks_grades`
+--
+ALTER TABLE `marks_grades`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `personal_access_tokens`
@@ -686,10 +895,16 @@ ALTER TABLE `student_groupes`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT pour la table `student_marks`
+--
+ALTER TABLE `student_marks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT pour la table `student_registrations`
 --
 ALTER TABLE `student_registrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `student_shifts`
